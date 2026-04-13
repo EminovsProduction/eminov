@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMINOVS | BEYOND THE CODE</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@900&family=Inter:wght@400;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="icon" href="logo.png">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heavy: ['Unbounded', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        prime: '#003cff',
+                        bg: '#0F0F0F',
+                        card: '#1A1A1A',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        /* CORE RESET & HACKS */
+        ::selection { background: #003cff; color: #fff; }
+        ::-webkit-scrollbar { width: 0; }
+        body { background: #0F0F0F; color: #fff; overflow-x: hidden; }
+
+
+        /* NEO-BRUTALISM CARDS */
+        .brutal-card { background: #1A1A1A; border: 2px solid #2A2A2A; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .brutal-card:hover { border-color: #003cff; transform: translateY(-10px) rotate(1deg); }
+
+        /* MARQUEE VELOCITY */
+        .marquee-wrap { display: flex; overflow: hidden; white-space: nowrap; font-family: 'Unbounded'; }
+        .marquee-inner { display: flex; animation: slide 20s linear infinite; }
+        @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* GLITCH TEXT */
+        .glitch-text:hover { animation: glitch 0.3s infinite; }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); color: #003cff; }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); color: #00E5FF; }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* STRIPES BACKGROUND */
+        .stripes {
+            background-image: repeating-linear-gradient(45deg, #151515 0px, #151515 2px, transparent 2px, transparent 10px);
+        }
+
+        /* LOADER V4 */
+        .loader-wrap {
+            position: fixed; inset: 0; background: #003cff; z-index: 99999;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* PERSPECTIVE WRAPPER */
+        .perspective-1000 { perspective: 1000px; }
+        .rotate-x-10 { transform: rotateX(10deg); }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+
+    <div class="loader-wrap" id="loader">
+        <div class="flex flex-col items-center">
+            <h1 class="font-heavy text-6xl text-white italic tracking-tighter" id="loader-logo">EMINOVS.</h1>
+            <div class="mt-4 font-mono text-black font-bold uppercase text-xs" id="perc">00%</div>
+        </div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-[100] px-6 py-8 md:px-12 flex justify-between items-start pointer-events-none">
+        <div class="pointer-events-auto flex flex-col group cursor-pointer">
+            <span class="font-heavy text-3xl leading-none glitch-text">EMINOVS<span class="text-prime">.</span></span>
+            <span class="font-mono text-[9px] uppercase tracking-widest mt-1 opacity-50">Lohiyangiz uchun ideal darajadagi sayt yaratish!</span>
+        </div>
+        <div class="pointer-events-auto flex flex-col items-end gap-2 group">
+            <div class="w-12 h-1 bg-white group-hover:bg-prime transition-all"></div>
+            <div class="w-8 h-1 bg-white group-hover:bg-prime transition-all"></div>
+            <span class="font-mono text-[9px] uppercase mt-2 opacity-50">IT / WEB DEVELOPMENT / CYBER SECURITY</span>
+        </div>
+    </nav>
+
+    <div class="c-main" id="c-dot"></div>
+    <div class="c-trail" id="c-outline"></div>
+
+    <main id="scroll-content">
+
+        <section class="min-h-screen flex flex-col justify-center items-center px-6 relative stripes overflow-hidden">
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-heavy text-[30vw] leading-none text-white whitespace-nowrap">CODE BASE</div>
+            </div>
+
+            <div class="relative z-10 text-center">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-10 overflow-hidden">
+                    <span class="px-3 py-1 bg-prime text-black font-heavy text-[10px] uppercase">Uzbekistan</span>
+                    <span class="px-3 py-1 border border-white/20 text-white font-heavy text-[10px] uppercase">Crafting Future</span>
+                </div>
+                
+                <h1 class="font-heavy text-6xl md:text-[12rem] leading-[0.85] tracking-tighter uppercase italic perspective-1000">
+                    <span class="block reveal-y">BRUTAL</span>
+                    <span class="block reveal-y text-prime">LOGIC.</span>
+                </h1>
+
+                <div class="mt-20 max-w-2xl mx-auto flex flex-col md:flex-row items-center gap-12 border-l-4 border-prime pl-10 text-left">
+                    <p class="text-xl md:text-2xl font-bold leading-tight">
+                        Biz chiroyli rasmlar emas, ishlaydigan va foyda keltiradigan <span class="underline decoration-prime">Murakkab Tizimlar</span> quramiz.
+                    </p>
+                    <div class="flex-shrink-0">
+                        <div class="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center animate-spin-slow">
+                            <i data-lucide="arrow-down-right" class="text-prime"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-12 right-12 flex flex-col gap-6 font-mono text-[10px] uppercase tracking-widest vertical-text">
+                <a href="#" class="hover:text-prime transition">Instagram</a>
+                <a href="#" class="hover:text-prime transition">Telegram</a>
+                <a href="#" class="hover:text-prime transition">Github</a>
+            </div>
+        </section>
+
+        <section class="py-10 bg-prime text-black overflow-hidden border-y-4 border-black">
+            <div class="marquee-wrap">
+                <div class="marquee-inner text-4xl md:text-8xl font-heavy uppercase italic">
+                    <span>* REACT ENGINE * NODE JS CORE * UI/UX ART * CYBER SECURITY * PIXEL PERFECT * NO TEMPLATE * </span>
+                    <span>* REACT ENGINE * NODE JS CORE * UI/UX ART * CYBER SECURITY * PIXEL PERFECT * NO TEMPLATE * </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-6 md:px-20 bg-[#0F0F0F]">
+            <div class="mb-32">
+                <h2 class="font-heavy text-5xl md:text-9xl uppercase tracking-tighter reveal-y">Xizmatlar<span class="text-prime">.</span></h2>
+                <div class="w-full h-1 bg-white/5 mt-10"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="brutal-card p-12 flex flex-col justify-between h-[500px] group">
+                    <div class="space-y-6">
+                        <div class="w-16 h-16 bg-prime/10 flex items-center justify-center group-hover:bg-prime transition-colors">
+                            <i data-lucide="code-2" class="text-prime group-hover:text-black transition-colors"></i>
+                        </div>
+                        <h3 class="font-heavy text-3xl uppercase">Fullstack <br/> Development</h3>
+                        <p class="text-gray-400 font-medium">Noldan boshlab murakkab veb-tizimlar va platformalar. React, Node.js va PostgreSQL stackida.</p>
+                    </div>
+                    <div class="font-mono text-[10px] text-prime uppercase font-bold tracking-[0.3em]">Code_Status: Optimal</div>
+                </div>
+
+                <div class="brutal-card p-12 flex flex-col justify-between h-[500px] group md:translate-y-20">
+                    <div class="space-y-6">
+                        <div class="w-16 h-16 bg-prime/10 flex items-center justify-center group-hover:bg-prime transition-colors">
+                            <i data-lucide="figma" class="text-prime group-hover:text-black transition-colors"></i>
+                        </div>
+                        <h3 class="font-heavy text-3xl uppercase">Interface <br/> Design</h3>
+                        <p class="text-gray-400 font-medium">Foydalanuvchini chalg'itmaydigan, qulay va brendingizni tanitadigan zamonaviy UI/UX prototiplar.</p>
+                    </div>
+                    <div class="font-mono text-[10px] text-prime uppercase font-bold tracking-[0.3em]">Design_Status: Elite</div>
+                </div>
+
+                <div class="brutal-card p-12 flex flex-col justify-between h-[500px] group">
+                    <div class="space-y-6">
+                        <div class="w-16 h-16 bg-prime/10 flex items-center justify-center group-hover:bg-prime transition-colors">
+                            <i data-lucide="zap" class="text-prime group-hover:text-black transition-colors"></i>
+                        </div>
+                        <h3 class="font-heavy text-3xl uppercase">Performance <br/> Audit</h3>
+                        <p class="text-gray-400 font-medium">Mavjud saytlarni optimallashtirish, tezlikni oshirish va qidiruv tizimlari (SEO) uchun tayyorlash.</p>
+                    </div>
+                    <div class="font-mono text-[10px] text-prime uppercase font-bold tracking-[0.3em]">Audit_Status: Secure</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-60 px-6 overflow-hidden stripes border-y border-white/5">
+            <div class="container mx-auto">
+                <div class="flex flex-col gap-4">
+                    <h4 class="font-heavy text-7xl md:text-[15rem] leading-[0.8] tracking-tighter text-outline-white opacity-20 hover:opacity-100 transition-opacity cursor-default">QUALITY</h4>
+                    <h4 class="font-heavy text-7xl md:text-[15rem] leading-[0.8] tracking-tighter text-prime italic pl-20">DRIVEN</h4>
+                    <h4 class="font-heavy text-7xl md:text-[15rem] leading-[0.8] tracking-tighter text-outline-white opacity-20 hover:opacity-100 transition-opacity cursor-default pr-20 text-right">RESULTS</h4>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-6 md:px-20">
+            <div class="flex justify-between items-end mb-32 border-b-2 border-white/10 pb-12">
+                <h2 class="font-heavy text-5xl md:text-8xl uppercase tracking-tighter italic">Ishlarimiz<span class="text-prime">.</span></h2>
+                <div class="text-right font-mono text-xs uppercase tracking-widest text-gray-500">
+                    Selected Works <br/> // Edition 2026
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-32">
+                <div class="reveal-up group">
+                    <div class="relative overflow-hidden aspect-[4/5] bg-card mb-8">
+                        <img src="https://masterpiecer-images.s3.yandex.net/81300f27a54411ee815cfeda328ae3aa:upscaled" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Work">
+                        <div class="absolute inset-0 bg-prime/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute top-10 right-10 w-20 h-20 bg-black flex items-center justify-center rounded-full -rotate-45 group-hover:rotate-0 transition-transform">
+                            <i data-lucide="arrow-right" class="text-prime"></i>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-heavy text-3xl uppercase italic">MCarsGo.uz</h4>
+                            <p class="font-mono text-[10px] text-gray-500 uppercase mt-2 tracking-widest">Cars / Analytics / React</p>
+                        </div>
+                        <span class="font-heavy text-xl">01</span>
+                    </div>
+                </div>
+
+                <div class="reveal-up group md:mt-60">
+                    <div class="relative overflow-hidden aspect-[4/5] bg-card mb-8">
+                        <img src="https://youtoomfc.netlify.app/media2.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Work">
+                        <div class="absolute inset-0 bg-prime/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute top-10 right-10 w-20 h-20 bg-black flex items-center justify-center rounded-full -rotate-45 group-hover:rotate-0 transition-transform">
+                            <i data-lucide="arrow-right" class="text-prime"></i>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-heavy text-3xl uppercase italic">YouTooMFC</h4>
+                            <p class="font-mono text-[10px] text-gray-500 uppercase mt-2 tracking-widest">Media Football / Minimalism / HTML</p>
+                        </div>
+                        <span class="font-heavy text-xl">02</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 bg-white text-black">
+            <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="border-l-8 border-black pl-8">
+                    <span class="font-heavy text-7xl block count" data-target="15">0</span>
+                    <span class="font-mono text-xs uppercase tracking-widest font-bold">Muvaffaqiyatli loyiha</span>
+                </div>
+                <div class="border-l-8 border-black pl-8">
+                    <span class="font-heavy text-7xl block count" data-target="2">0</span>
+                    <span class="font-mono text-xs uppercase tracking-widest font-bold">Yillik tajriba</span>
+                </div>
+                <div class="border-l-8 border-black pl-8">
+                    <span class="font-heavy text-7xl block count" data-target="15"></span>
+                    <span class="font-mono text-xs uppercase tracking-widest font-bold">Mamnun mijozlar</span>
+                </div>
+                <div class="border-l-8 border-black pl-8">
+                    <span class="font-heavy text-7xl block count" data-target="100">0</span>
+                    <span class="font-mono text-xs uppercase tracking-widest font-bold">Arxivdagi G'oyalar</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-6 md:px-20 bg-[#0F0F0F] relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1/3 h-full stripes opacity-20 pointer-events-none"></div>
+
+            <div class="mb-32 relative z-10">
+                <h2 class="font-heavy text-5xl md:text-9xl uppercase tracking-tighter reveal-y">Tariflar<span class="text-prime">.</span></h2>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mt-10">
+                    <div class="w-full md:w-1/2 h-1 bg-white/5"></div>
+                    <p class="font-mono text-xs uppercase tracking-[0.3em] text-gray-500">Invest_In_Quality_v1.0</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-1 shadow-2xl">
+                <div class="brutal-card p-10 flex flex-col justify-between min-h-[600px] border-white/10 group">
+                    <div class="space-y-8">
+                        <div class="flex justify-between items-start">
+                            <span class="font-mono text-xs px-3 py-1 bg-white/5 border border-white/10">01</span>
+                            <i data-lucide="layers" class="text-gray-500 group-hover:text-prime transition-colors"></i>
+                        </div>
+                        <h3 class="font-heavy text-4xl uppercase"><span class="text-prime">Basic</span></h3>
+                        <p class="text-gray-400 font-medium leading-relaxed">Kichik biznes uchun yo'ki Sotuvni oshiruvchi, bir sahifali kreativ landing page uchun. Minimalizm va tezlik.</p>
+                        
+                        <ul class="space-y-4 font-mono text-[11px] uppercase tracking-wider text-gray-300">
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> UI/UX Dizayn</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> Adaptiv (Mobile) versiya</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> SEO Optimizatsiya</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> 5-7 kun davomiyligi</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <div class="text-4xl font-heavy mb-6 italic">$299<span class="text-sm not-italic opacity-50 font-sans">+</span></div>
+                        <a href="https://t.me/eminovsdigital_bot?start=basic" class="block w-full py-4 bg-white text-black font-heavy text-center uppercase text-sm hover:bg-prime hover:text-white transition-all transform group-hover:scale-[1.02]" >Tanlash</a>
+                    </div>
+                </div>
+
+                <div class="brutal-card p-10 flex flex-col justify-between min-h-[600px] bg-white text-black border-prime group relative md:-translate-y-10 z-20">
+                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-prime text-white px-6 py-2 font-heavy text-[10px] uppercase italic">Most Popular</div>
+                    <div class="space-y-8">
+                        <div class="flex justify-between items-start">
+                            <span class="font-mono text-xs px-3 py-1 bg-black/5 border border-black/10">02</span>
+                            <i data-lucide="layout" class="text-prime"></i>
+                        </div>
+                        <h3 class="font-heavy text-4xl uppercase">Business</h3>
+                        <p class="text-gray-600 font-medium leading-relaxed">Biznes Kompaniyalar uchun ko'p sahifali professional veb-sayt va boshqaruv paneli.</p>
+                        
+                        <ul class="space-y-4 font-mono text-[11px] uppercase tracking-wider text-black/70">
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> Murakkab Animatsiyalar</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> Admin Panel (CMS)</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> API Integratsiyalar</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> 14-20 kun davomiyligi</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <div class="text-4xl font-heavy mb-6 italic">$499<span class="text-sm not-italic opacity-50 font-sans">+</span></div>
+                        <a href="https://t.me/eminovsdigital_bot?start=bussiness" class="block w-full py-4 bg-prime text-white font-heavy text-center uppercase text-sm hover:bg-black transition-all transform group-hover:scale-[1.02]">Tanlash</a>
+                    </div>
+                </div>
+
+                <div class="brutal-card p-10 flex flex-col justify-between min-h-[600px] border-white/10 group">
+                    <div class="space-y-8">
+                        <div class="flex justify-between items-start">
+                            <span class="font-mono text-xs px-3 py-1 bg-white/5 border border-white/10">03</span>
+                            <i data-lucide="database" class="text-gray-500 group-hover:text-prime transition-colors"></i>
+                        </div>
+                        <h3 class="font-heavy text-4xl uppercase">BIG<br/><span class="text-prime">Bussiness</span></h3>
+                        <p class="text-gray-400 font-medium leading-relaxed">E-commerce, Marketplace yoki sizning maxsus g'oyangiz uchun noyob tizimlar.</p>
+                        
+                        <ul class="space-y-4 font-mono text-[11px] uppercase tracking-wider text-gray-300">
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> To'lov tizimlari (Payme/Click)</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> High-Load Arxivtektura</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> 24/7 Texnik yordam</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-prime"></span> Muddat kelishuv asosida</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <div class="text-4xl font-heavy mb-6 italic">$799+</div>
+                        <a href="https://t.me/eminovsdigital_bot?start=big_bussiness" class="block w-full py-4 bg-white text-black font-heavy text-center uppercase text-sm hover:bg-prime hover:text-white transition-all transform group-hover:scale-[1.02]">Bog'lanish</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-40 px-6 md:px-20 bg-[#0F0F0F] border-t border-white/5">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+                <div>
+                    <h2 class="font-heavy text-5xl md:text-7xl uppercase tracking-tighter reveal-y leading-none">Tezkor<br/><span class="text-prime">Savollar.</span></h2>
+                    <p class="mt-8 text-gray-400 font-mono text-sm uppercase tracking-widest">Support_System_v4.2</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="brutal-card p-6 cursor-pointer group" onclick="this.querySelector('.faq-ans').classList.toggle('hidden')">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-heavy text-lg uppercase">Sayt qancha vaqtda tayyor bo'ladi?</h4>
+                            <i data-lucide="plus" class="text-prime group-hover:rotate-90 transition-transform"></i>
+                        </div>
+                        <p class="faq-ans hidden mt-4 text-gray-400 font-medium border-t border-white/10 pt-4">
+                            Loyiha murakkabligiga qarab 5 kundan 1 oygacha. Oddiy landing pagelar odatda 7 ish kunida topshiriladi.
+                        </p>
+                    </div>
+                    <div class="brutal-card p-6 cursor-pointer group" onclick="this.querySelector('.faq-ans').classList.toggle('hidden')">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-heavy text-lg uppercase">Dizayn ham narx ichidami?</h4>
+                            <i data-lucide="plus" class="text-prime group-hover:rotate-90 transition-transform"></i>
+                        </div>
+                        <p class="faq-ans hidden mt-4 text-gray-400 font-medium border-t border-white/10 pt-4">
+                            Ha, biz "Beyond the Code" tamoyili asosida ishlaymiz. Har bir tarifimizda UX/UX dizayn (Figma) xizmati mavjud.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-60 px-6 md:px-20 bg-[#0F0F0F] relative">
+            <div class="absolute top-0 right-0 w-1/3 h-full stripes opacity-20"></div>
+            
+            <div class="relative z-10 grid lg:grid-cols-2 gap-40">
+                <div>
+                    <h2 class="font-heavy text-6xl md:text-9xl uppercase leading-[0.8] tracking-tighter italic reveal-y">
+                        LOYIHA <br/> <span class="text-prime">KERAKMI?</span>
+                    </h2>
+                    <p class="mt-20 text-2xl text-gray-400 font-bold uppercase leading-tight max-w-md">
+                        Biz faqat masshtabli va qiziqarli g'oyalar bilan ishlaymiz. Agar sizning loyihangiz shunday bo'lsa - yozing.
+                    </p>
+                    
+                    <div class="mt-20 flex flex-col gap-4 font-mono">
+                        <div class="flex items-center gap-4 group cursor-pointer">
+                            <div class="w-12 h-12 bg-prime flex items-center justify-center">
+                                <i data-lucide="mail" class="text-black"></i>
+                            </div>
+                            <span class="text-xl group-hover:text-prime transition">emilonpablo@gmail.com</span>
+                        </div>
+                        <div class="flex items-center gap-4 group cursor-pointer">
+                            <div class="w-12 h-12 bg-white flex items-center justify-center">
+                                <i data-lucide="send" class="text-black"></i>
+                            </div>
+                            <span class="text-xl group-hover:text-prime transition">@emvbkh</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-card p-10 md:p-20 border-2 border-white/5">
+                    <form id="contact-form" class="space-y-12">
+    <div class="space-y-4">
+        <label class="font-mono text-[10px] uppercase tracking-widest text-gray-500">To'liq ismingiz</label>
+        <input type="text" name="name" required class="w-full bg-transparent border-b-2 border-white/10 py-4 font-heavy text-2xl uppercase focus:border-prime outline-none transition-all placeholder:text-white/5" placeholder="JOHN DOE">
+    </div>
+
+    <div class="space-y-4">
+        <label class="font-mono text-[10px] uppercase tracking-widest text-gray-500">Telegram / Tel</label>
+        <input type="text" name="contact" required class="w-full bg-transparent border-b-2 border-white/10 py-4 font-heavy text-2xl uppercase focus:border-prime outline-none transition-all placeholder:text-white/5" placeholder="@USERNAME">
+    </div>
+
+    <div class="space-y-4">
+        <label class="font-mono text-[10px] uppercase tracking-widest text-gray-500">Loyiha turi</label>
+        <select name="project_type" class="w-full bg-transparent border-b-2 border-white/10 py-4 font-heavy text-2xl uppercase focus:border-prime outline-none transition-all appearance-none">
+            <option value="Web App" class="bg-card">Web App</option>
+            <option value="Design UI" class="bg-card">Design UI</option>
+            <option value="Consulting" class="bg-card">Consulting</option>
+        </select>
+    </div>
+
+    <a type="submit" href="https://t.me/eminovsdigital_bot?start=basic" class="position relative top-10 py-8 bg-prime text-black font-heavy text-2xl uppercase italic tracking-tighter hover:bg-white transition-all transform active:scale-95">
+        YUBORISH / SEND
+    </a>
+</form>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-20 px-6 border-t border-white/5 bg-black">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+                <div class="flex flex-col items-center md:items-start">
+                    <span class="font-heavy text-3xl italic tracking-tighter uppercase">EMINOVS<span class="text-prime">.</span></span>
+                    <span class="font-mono text-[8px] text-gray-700 tracking-[0.6em] mt-4 uppercase">© 2026 Crafted with digital arrogance</span>
+                </div>
+
+                <div class="flex gap-16 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-500">
+                    <a href="#" class="hover:text-prime transition">Instagram</a>
+                    <a href="#" class="hover:text-prime transition">Behance</a>
+                    <a href="#" class="hover:text-prime transition">LinkedIn</a>
+                </div>
+
+                <div class="text-right">
+                    <span class="font-mono text-[9px] text-gray-800 uppercase tracking-widest">Built with React, GSAP and Pure Adrenaline</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // INIT ICONS
+        lucide.createIcons();
+
+        // 1. LOADER ENGINE
+        let perc = 0;
+        const loader = document.getElementById('loader');
+        const percText = document.getElementById('perc');
+        const loadInt = setInterval(() => {
+            perc += Math.floor(Math.random() * 7) + 1;
+            if (perc >= 100) {
+                perc = 100;
+                clearInterval(loadInt);
+                gsap.to(loader, {
+                    y: "-100%", duration: 1.2, ease: "expo.inOut", onComplete: () => {
+                        loader.style.display = 'none';
+                        initApp();
+                    }
+                });
+            }
+            percText.innerText = perc.toString().padStart(2, '0') + '%';
+        }, 40);
+
+
+        // 3. MATTER.JS PHYSICS (Floating Blocks)
+        function initPhysics() {
+            const { Engine, Render, Runner, Bodies, Composite, Mouse, MouseConstraint } = Matter;
+            const engine = Engine.create();
+            const render = Render.create({
+                element: document.getElementById('matter-container'),
+                engine: engine,
+                options: {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    wireframes: false,
+                    background: 'transparent'
+                }
+            });
+                  
+            // Create invisible walls
+            const ground = Bodies.rectangle(window.innerWidth/2, window.innerHeight + 50, window.innerWidth, 100, { isStatic: true });
+            const leftWall = Bodies.rectangle(-50, window.innerHeight/2, 100, window.innerHeight, { isStatic: true });
+            const rightWall = Bodies.rectangle(window.innerWidth + 50, window.innerHeight/2, 100, window.innerHeight, { isStatic: true });
+            
+            // Create blocks
+            const blocks = [];
+            for(let i=0; i<15; i++) {
+                const b = Bodies.rectangle(Math.random()*window.innerWidth, -100, 80, 40, {
+                    render: { fillStyle: i % 2 === 0 ? '#FF3D00' : '#ffffff' }
+                });
+                blocks.push(b);
+            }
+
+            Composite.add(engine.world, [ground, leftWall, rightWall, ...blocks]);
+            
+            const mouse = Mouse.create(render.canvas);
+            const mouseConstraint = MouseConstraint.create(engine, {
+                mouse: mouse,
+                constraint: { stiffness: 0.2, render: { visible: false } }
+            });
+            Composite.add(engine.world, mouseConstraint);
+
+            Render.run(render);
+            Runner.run(Runner.create(), engine);
+        }
+
+        // 4. GSAP SCROLL & REVEAL
+        function initApp() {
+            gsap.registerPlugin(ScrollTrigger);
+            initPhysics();
+
+            // Reveal Animation
+            gsap.utils.toArray('.reveal-y').forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: { trigger: el, start: "top 90%" },
+                    y: 100, opacity: 0, skewY: 7, duration: 1.5, ease: "expo.out"
+                });
+            });
+
+            // Count Animation
+            gsap.utils.toArray('.count').forEach(el => {
+                const target = parseInt(el.getAttribute('data-target'));
+                ScrollTrigger.create({
+                    trigger: el,
+                    onEnter: () => {
+                        let obj = { val: 0 };
+                        gsap.to(obj, {
+                            val: target, duration: 2, ease: "power3.out",
+                            onUpdate: () => el.innerText = Math.ceil(obj.val) + '+'
+                        });
+                    }
+                });
+            });
+
+            // Parallax Images
+            gsap.utils.toArray('img').forEach(img => {
+                gsap.to(img, {
+                    scrollTrigger: { trigger: img, scrub: true },
+                    y: -50, ease: "none"
+                });
+            });
+        }
+
+        // 5. FORM LOGIC
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Trigger explosion of blocks or something cool
+            alert("MATRIX QABUL QILDI. TEZ ORADA ALOQAGA CHIQAMIZ.");
+        });
+
+        // RE-CALC ON RESIZE
+        window.addEventListener('resize', () => {
+            location.reload(); // Hard reset physics for simplicity
+        });
+
+        
+    </script>
+</body>
+</html>
